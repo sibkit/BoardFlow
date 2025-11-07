@@ -3,7 +3,7 @@ using BoardFlow.Formats.Common;
 using BoardFlow.Formats.Common.Reading;
 using BoardFlow.Formats.Excellon.Entities;
 
-namespace BoardFlow.Formats.Excellon;
+namespace BoardFlow.Formats.Excellon.Reading;
 
 public enum CoordinatesMode {
     Incremental,

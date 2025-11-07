@@ -4,7 +4,7 @@ using BoardFlow.Formats.Bfg.Entities;
 using BoardFlow.Formats.Common;
 using BoardFlow.Formats.Common.Reading;
 
-namespace BoardFlow.Formats.Excellon;
+namespace BoardFlow.Formats.Excellon.Reading;
 
 internal class StringCoordinate {
     public string? X{get;set;}

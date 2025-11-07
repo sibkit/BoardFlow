@@ -3,7 +3,7 @@ using BoardFlow.Formats.Common.Reading;
 using BoardFlow.Formats.Excellon.Entities;
 using ApplicationException = System.ApplicationException;
 
-namespace BoardFlow.Formats.Excellon.CommandReaders;
+namespace BoardFlow.Formats.Excellon.Reading.CommandReaders;
 
 public class BeginPatternReader: ICommandReader<ExcellonCommandType, ExcellonReadingContext, ExcellonLayer> {
     public ExcellonCommandType[] GetNextLikelyTypes() {

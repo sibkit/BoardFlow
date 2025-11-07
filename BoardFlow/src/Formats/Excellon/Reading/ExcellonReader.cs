@@ -1,12 +1,12 @@
 ﻿using BoardFlow.Formats.Common.Reading;
-using BoardFlow.Formats.Excellon.CommandReaders;
 using BoardFlow.Formats.Excellon.Entities;
-using ArcMillOperationReader = BoardFlow.Formats.Excellon.CommandReaders.ArcMillOperationReader;
-using SetToolReader = BoardFlow.Formats.Excellon.CommandReaders.SetToolReader;
-using SetUomFormatReader = BoardFlow.Formats.Excellon.CommandReaders.SetUomFormatReader;
-using ToolDefineReader = BoardFlow.Formats.Excellon.CommandReaders.ToolDefineReader;
+using BoardFlow.Formats.Excellon.Reading.CommandReaders;
+using ArcMillOperationReader = BoardFlow.Formats.Excellon.Reading.CommandReaders.ArcMillOperationReader;
+using SetToolReader = BoardFlow.Formats.Excellon.Reading.CommandReaders.SetToolReader;
+using SetUomFormatReader = BoardFlow.Formats.Excellon.Reading.CommandReaders.SetUomFormatReader;
+using ToolDefineReader = BoardFlow.Formats.Excellon.Reading.CommandReaders.ToolDefineReader;
 
-namespace BoardFlow.Formats.Excellon;
+namespace BoardFlow.Formats.Excellon.Reading;
 
 using ArcMillOperationReader = ArcMillOperationReader;
 using SetToolReader = SetToolReader;

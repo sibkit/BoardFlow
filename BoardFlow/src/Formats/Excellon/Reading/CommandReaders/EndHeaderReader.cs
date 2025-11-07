@@ -1,16 +1,17 @@
 ﻿using BoardFlow.Formats.Common.Reading;
 using BoardFlow.Formats.Excellon.Entities;
 
-namespace BoardFlow.Formats.Excellon.CommandReaders;
+namespace BoardFlow.Formats.Excellon.Reading.CommandReaders;
 
-public class EndProgramCommandReader: ICommandReader<ExcellonCommandType, ExcellonReadingContext, ExcellonLayer> {
+public class EndHeaderReader: ICommandReader<ExcellonCommandType, ExcellonReadingContext, ExcellonLayer> {
     public ExcellonCommandType[] GetNextLikelyTypes() {
         return [];
     }
     public bool Match(ExcellonReadingContext ctx) {
-        return ctx.CurLine == "M30";
+        var line = ctx.CurLine;
+        return line.Equals("%") || line.Equals("M95");
     }
     public void WriteToProgram(ExcellonReadingContext ctx, ExcellonLayer layer) {
-        //Do nothing
+        //do nothing
     }
 }

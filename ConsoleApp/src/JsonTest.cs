@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace ConsoleApp;
@@ -32,14 +30,17 @@ public class ShapeConverter : JsonConverter<IShape>
         using var doc = JsonDocument.ParseValue(ref reader);
         var root = doc.RootElement;
 
-        string type = root.GetProperty("Type").GetString();
+        var type = root.GetProperty("Type").GetString();
 
-        return type switch
+        IShape? result = type switch
         {
-            "circle" => JsonSerializer.Deserialize(root.GetRawText(), MyJsonContext.Default.Circle)!,
-            "rectangle" => JsonSerializer.Deserialize(root.GetRawText(), MyJsonContext.Default.Rectangle)!,
+            "circle" => JsonSerializer.Deserialize(root.GetRawText(), MyJsonContext.Default.Circle),
+            "rectangle" => JsonSerializer.Deserialize(root.GetRawText(), MyJsonContext.Default.Rectangle),
             _ => throw new JsonException($"Unknown shape type: {type}")
         };
+        if(result is null)
+            throw new JsonException($"Unknown shape type: {type}");
+        return result;
     }
 
     public override void Write(Utf8JsonWriter writer, IShape value, JsonSerializerOptions options)
@@ -61,33 +62,30 @@ public class ShapeConverter : JsonConverter<IShape>
 // ---------- Пример использования ----------
 public class JsonTest
 {
-    public static void Test()
-    {
-        var shapes = new List<IShape>
-        {
+    public static void Test() {
+        var shapes = new List<IShape> {
             new Circle { Radius = 5.2 },
             new Rectangle { Width = 3.0, Height = 4.0 }
         };
 
-        var options = new JsonSerializerOptions
-        {
-            WriteIndented = true,
-            Converters = { new ShapeConverter() },
-            TypeInfoResolver = MyJsonContext.Default
-        };
+        // var options = new JsonSerializerOptions {
+        //     WriteIndented = true,
+        //     Converters = { new ShapeConverter() },
+        //     TypeInfoResolver = MyJsonContext.Default
+        // };
 
         // Сериализация
-        string json = JsonSerializer.Serialize(shapes, MyJsonContext.Default.ListIShape);
+        var json = JsonSerializer.Serialize(shapes, MyJsonContext.Default.ListIShape);
         Console.WriteLine("JSON:");
         Console.WriteLine(json);
 
         // Десериализация
         var restored = JsonSerializer.Deserialize(json, MyJsonContext.Default.ListIShape);
         Console.WriteLine("\nRestored:");
-        foreach (var shape in restored!)
-        {
-            Console.WriteLine($"{shape.Type}");
-        }
+        if (restored is not null)
+            foreach (var shape in restored) {
+                Console.WriteLine($"{shape.Type}");
+            }
     }
 }
 

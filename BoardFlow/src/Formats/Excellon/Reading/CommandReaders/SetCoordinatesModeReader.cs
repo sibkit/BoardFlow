@@ -1,7 +1,7 @@
 ﻿using BoardFlow.Formats.Common.Reading;
 using BoardFlow.Formats.Excellon.Entities;
 
-namespace BoardFlow.Formats.Excellon.CommandReaders;
+namespace BoardFlow.Formats.Excellon.Reading.CommandReaders;
 
 public class SetCoordinatesModeReader: ICommandReader<ExcellonCommandType, ExcellonReadingContext, ExcellonLayer> {
     public ExcellonCommandType[] GetNextLikelyTypes() {

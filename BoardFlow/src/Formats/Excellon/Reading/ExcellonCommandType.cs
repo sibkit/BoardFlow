@@ -1,4 +1,4 @@
-﻿namespace BoardFlow.Formats.Excellon;
+﻿namespace BoardFlow.Formats.Excellon.Reading;
 
 public enum ExcellonCommandType
 {

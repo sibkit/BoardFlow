@@ -2,7 +2,7 @@
 using BoardFlow.Formats.Excellon.Entities;
 using ApplicationException = System.ApplicationException;
 
-namespace BoardFlow.Formats.Excellon.CommandReaders;
+namespace BoardFlow.Formats.Excellon.Reading.CommandReaders;
 
 public partial class RepeatPatternReader: ICommandReader<ExcellonCommandType, ExcellonReadingContext, ExcellonLayer> {
     

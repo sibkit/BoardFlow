@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 using BoardFlow.Formats.Common.Reading;
 using BoardFlow.Formats.Excellon.Entities;
 
-namespace BoardFlow.Formats.Excellon.CommandReaders;
+namespace BoardFlow.Formats.Excellon.Reading.CommandReaders;
 
 public partial class ToolDefineReader: ICommandReader<ExcellonCommandType, ExcellonReadingContext, ExcellonLayer> {
     
