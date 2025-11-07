@@ -13,10 +13,10 @@ public enum SolderMaskColor {
 
 public class SolderMaskLayer: IBoardLayer {
     public required string Name { get; set; }
-    public SolderMaskLayer(SolderMaskColor color, StrxLayer image) {
+    public SolderMaskLayer(SolderMaskColor color, Bfg image) {
         Color = color;
         Image = image;
     }
     public SolderMaskColor Color { get; }
-    public StrxLayer Image { get; }
+    public Bfg Image { get; }
 }

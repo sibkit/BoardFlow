@@ -3,7 +3,7 @@ using BoardFlow.Formats.Excellon.Entities;
 
 namespace BoardFlow.Formats.Excellon.Reading.CommandReaders;
 
-public class IgnoredFormatReader: ICommandReader<ExcellonCommandType, ExcellonReadingContext, ExcellonLayer> {
+public class IgnoredFormatReader: ICommandReader<ExcellonCommandType, ExcellonReadingContext, Entities.ExcellonDocument> {
 
     public ExcellonCommandType[] GetNextLikelyTypes() {
         return [];
@@ -25,7 +25,7 @@ public class IgnoredFormatReader: ICommandReader<ExcellonCommandType, ExcellonRe
             _ => false
         };
     }
-    public void WriteToProgram(ExcellonReadingContext ctx, ExcellonLayer layer) {
+    public void WriteToProgram(ExcellonReadingContext ctx, Entities.ExcellonDocument document) {
         ctx.WriteInfo("Пропущенная команда: "+ctx.CurLine);
     }
 }

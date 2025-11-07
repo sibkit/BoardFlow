@@ -5,21 +5,21 @@ using BoardFlow.Formats.Gerber.Entities.Apertures;
 
 namespace BoardFlow.Formats.Gerber.Reading.CommandReaders;
 
-public class BeginRegionCommandReader: ICommandReader<GerberCommandType, GerberReadingContext, GerberLayer> {
+public class BeginRegionCommandReader: ICommandReader<GerberCommandType, GerberReadingContext, GerberDocument> {
     public GerberCommandType[] GetNextLikelyTypes() {
         return [];
     }
     public bool Match(GerberReadingContext ctx) {
         return ctx.CurLine == "G36*";
     }
-    public void WriteToProgram(GerberReadingContext ctx, GerberLayer layer) {
+    public void WriteToProgram(GerberReadingContext ctx, GerberDocument document) {
         
         if (ctx.CurApertureCode == null) {
             ctx.WriteError("Не задана аппертура перед командой G36");
             return;
         }
             
-        var curAperture = layer.Apertures[ctx.CurApertureCode.Value];
+        var curAperture = document.Apertures[ctx.CurApertureCode.Value];
         
         switch (curAperture) {
             case CircleAperture ca:

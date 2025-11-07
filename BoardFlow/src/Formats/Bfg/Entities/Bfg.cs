@@ -3,7 +3,7 @@ using BoardFlow.Formats.Bfg.Entities.GraphicElements.Curves;
 
 namespace BoardFlow.Formats.Bfg.Entities;
 
-public class StrxLayer {
+public class Bfg {
     public List<IGraphicElement> GraphicElements { get; } = [];
     public Bounds? Bounds { get; set; }
     

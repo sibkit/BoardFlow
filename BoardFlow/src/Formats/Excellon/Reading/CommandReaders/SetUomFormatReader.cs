@@ -5,7 +5,7 @@ using BoardFlow.Formats.Excellon.Entities;
 
 namespace BoardFlow.Formats.Excellon.Reading.CommandReaders;
 
-public partial class SetUomFormatReader : ICommandReader<ExcellonCommandType, ExcellonReadingContext, ExcellonLayer> {
+public partial class SetUomFormatReader : ICommandReader<ExcellonCommandType, ExcellonReadingContext, Entities.ExcellonDocument> {
     public ExcellonCommandType[] GetNextLikelyTypes() {
         return [ExcellonCommandType.Comment];
     }
@@ -16,17 +16,17 @@ public partial class SetUomFormatReader : ICommandReader<ExcellonCommandType, Ex
 
     private static readonly Regex ReNum = NumberRegex();
     
-    public void WriteToProgram(ExcellonReadingContext ctx, ExcellonLayer layer) {
+    public void WriteToProgram(ExcellonReadingContext ctx, Entities.ExcellonDocument document) {
         var lineParts = ctx.CurLine.Split(',');
         var firstPart = lineParts[0].Trim();
 
-        layer.Uom = firstPart switch {
+        document.Uom = firstPart switch {
             "INCH" => Uom.Inch,
             "METRIC" => Uom.Metric,
             _ => throw new Exception("Invalid Uom")
         };
 
-        ctx.Uom = layer.Uom;
+        ctx.Uom = document.Uom;
         
         switch (lineParts.Length) {
             case 1:

@@ -4,7 +4,7 @@ using BoardFlow.Formats.Excellon.Entities;
 
 namespace BoardFlow.Formats.Excellon.Reading.CommandReaders;
 
-public class DrillingOperationReader: ICommandReader<ExcellonCommandType, ExcellonReadingContext, ExcellonLayer> {
+public class DrillingOperationReader: ICommandReader<ExcellonCommandType, ExcellonReadingContext, Entities.ExcellonDocument> {
     
     public ExcellonCommandType[] GetNextLikelyTypes() {
         return[ExcellonCommandType.DrillOperation, ExcellonCommandType.SetTool];
@@ -13,7 +13,7 @@ public class DrillingOperationReader: ICommandReader<ExcellonCommandType, Excell
         return ExcellonCoordinates.IsCoordinate(ctx.CurLine);
     }
     
-    public void WriteToProgram(ExcellonReadingContext ctx, ExcellonLayer layer) {
+    public void WriteToProgram(ExcellonReadingContext ctx, Entities.ExcellonDocument document) {
         int? toolNumber;
         Point? coordinate;
         
@@ -25,8 +25,8 @@ public class DrillingOperationReader: ICommandReader<ExcellonCommandType, Excell
         var readedCoordinate = ExcellonCoordinates.ReadCoordinate(ctx.CurLine, ctx) ?? throw new Exception( "DrillingOperationHandler: WriteToProgram (line matched, not readed)");
         switch (ctx.CoordinatesMode) {
             case CoordinatesMode.Incremental:
-                if (layer.Operations.Count != 0) {
-                    var lastOperation = layer.Operations.Last();
+                if (document.Operations.Count != 0) {
+                    var lastOperation = document.Operations.Last();
                     coordinate = lastOperation.StartPoint + readedCoordinate;
                 } else {
                     coordinate = readedCoordinate;
@@ -43,6 +43,6 @@ public class DrillingOperationReader: ICommandReader<ExcellonCommandType, Excell
         if (ctx.CurPattern is { State: PatternState.Opened }) {
             ctx.CurPattern.MachiningOperations.Add(result);
         }
-        layer.Operations.Add(result);
+        document.Operations.Add(result);
     }
 }

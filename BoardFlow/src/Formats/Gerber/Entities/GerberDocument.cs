@@ -3,7 +3,7 @@ using BoardFlow.Formats.Gerber.Entities.Apertures.Macro;
 
 namespace BoardFlow.Formats.Gerber.Entities;
 
-public class GerberLayer
+public class GerberDocument
 {
     public List<IPaintOperation> Operations { get; } = [];
     public Uom? Uom {get; set;} = null;

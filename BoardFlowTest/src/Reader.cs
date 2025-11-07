@@ -1,11 +1,7 @@
-﻿using BoardFlow.Formats.Excellon;
+﻿using BoardFlow.Formats.Excellon.Reading;
 using BoardFlow.Formats.Gerber.Reading;
-using BoardFlow.Formats.Excellon;
-using BoardFlow.Formats.Excellon.Reading;
-using BoardFlow.Formats.Gerber.Reading;
-using BoardFlow.Formats.Gerber;
 
-namespace BoardFlow;
+namespace BoardFlowTest;
 
 public static class Reader
 {

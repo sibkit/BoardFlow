@@ -3,14 +3,14 @@ using BoardFlow.Formats.Excellon.Entities;
 
 namespace BoardFlow.Formats.Excellon.Reading.CommandReaders;
 
-public class LinearMillOperationReader: ICommandReader<ExcellonCommandType, ExcellonReadingContext, ExcellonLayer> {
+public class LinearMillOperationReader: ICommandReader<ExcellonCommandType, ExcellonReadingContext, Entities.ExcellonDocument> {
     public ExcellonCommandType[] GetNextLikelyTypes() {
         return [ExcellonCommandType.LinearMillOperation, ExcellonCommandType.ArcMillOperation];
     }
     public bool Match(ExcellonReadingContext ctx) {
         return ctx.CurLine.StartsWith("G01");
     }
-    public void WriteToProgram(ExcellonReadingContext ctx, ExcellonLayer layer) {
+    public void WriteToProgram(ExcellonReadingContext ctx, Entities.ExcellonDocument document) {
         var sc = ctx.CurLine[3..];
         var coordinate = ExcellonCoordinates.ReadCoordinate(sc, ctx);
         if (coordinate == null) {

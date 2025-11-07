@@ -4,7 +4,7 @@ using BoardFlow.Formats.Excellon.Entities;
 
 namespace BoardFlow.Formats.Excellon.Reading.CommandReaders;
 
-public partial class ArcMillOperationReader: ICommandReader<ExcellonCommandType, ExcellonReadingContext, ExcellonLayer> {
+public partial class ArcMillOperationReader: ICommandReader<ExcellonCommandType, ExcellonReadingContext, Entities.ExcellonDocument> {
     
     private static readonly Regex ReArcMill = ArcMillRegex();
     public ExcellonCommandType[] GetNextLikelyTypes() {
@@ -17,7 +17,7 @@ public partial class ArcMillOperationReader: ICommandReader<ExcellonCommandType,
     public bool Match(ExcellonReadingContext ctx) {
         return ctx.CurLine.StartsWith("G02") || ctx.CurLine.StartsWith("G03");
     }
-    public void WriteToProgram(ExcellonReadingContext ctx, ExcellonLayer layer) {
+    public void WriteToProgram(ExcellonReadingContext ctx, Entities.ExcellonDocument document) {
         var match = ReArcMill.Match(ctx.CurLine);
         if (match.Success) {
             

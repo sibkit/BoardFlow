@@ -6,7 +6,7 @@ using BoardFlow.Formats.Gerber.Entities.Apertures;
 
 namespace BoardFlow.Formats.Gerber.Reading.CommandReaders;
 
-public partial class LineSegmentOperationReader: ICommandReader<GerberCommandType, GerberReadingContext, GerberLayer> {
+public partial class LineSegmentOperationReader: ICommandReader<GerberCommandType, GerberReadingContext, GerberDocument> {
 
     [GeneratedRegex("^(?:(X)([+-]?[0-9.]+))?(?:(Y)([+-]?[0-9.]+))?D01\\*$")]
     private static partial Regex MatchRegex();
@@ -21,7 +21,7 @@ public partial class LineSegmentOperationReader: ICommandReader<GerberCommandTyp
         return MatchRegex().IsMatch(ctx.CurLine);
     }
 
-    public void WriteToProgram(GerberReadingContext ctx, GerberLayer layer) {
+    public void WriteToProgram(GerberReadingContext ctx, GerberDocument document) {
         var m = MatchRegex().Match(ctx.CurLine);
         
         var xs = m.Groups[2].Value;
@@ -45,13 +45,13 @@ public partial class LineSegmentOperationReader: ICommandReader<GerberCommandTyp
             return;
         }
             
-        var curAperture = layer.Apertures[ctx.CurApertureCode.Value];
+        var curAperture = document.Apertures[ctx.CurApertureCode.Value];
         switch (curAperture) {
             case CircleAperture ca:
                 if (ctx.CurPathPaintOperation == null) {
                     var op = new PathPaintOperation(ca, (Point)ctx.CurCoordinate);
                     op.Parts.Add(new LinePathPart(c));
-                    layer.Operations.Add(op);
+                    document.Operations.Add(op);
                 } else {
                     var part = new LinePathPart(c);
                     ctx.CurPathPaintOperation!.Parts.Add(part);

@@ -26,7 +26,7 @@ public static class Program {
 
     static void BuildTestPrintFile() {
 
-        var spv = new StrxLayer {
+        var spv = new Bfg {
             Bounds = new Bounds(0, 0, 1800, 1800)
         };
         
@@ -56,46 +56,11 @@ public static class Program {
         
 
 
-// // Или с расширенными цветами
-//         var layer = new StrxLayer();
-// // ... добавление элементов ...
-//
-//         var bounds = CarExample.CalculateTotalBounds(layer);
-//         var advancedRasterizer = new AdvancedRasterizer(800, 600, bounds);
-//
-//         var bitmap = advancedRasterizer.RasterizeLayerWithColors(layer, SKColors.LightGray);
-//         advancedRasterizer.SaveToFile(bitmap, "colored_car.png");
+
         
         
         JsonTest.Test();
-        //BuildTestPrintFile();
-        //
-        // var p1 = new Painter<Contour>(10, 10);
-        // p1.LineToInc(0, 60);
-        // p1.LineToInc(40, 0);
-        // p1.LineToInc(0, -60);
-        // p1.LineToInc(-40, 0);
-        // var c1 = p1.Root;
-        //
-        // var p2 = new Painter<Contour>(40, 30);
-        // p2.LineToInc(20, 20);
-        // p2.LineToInc(-30, 30);
-        // p2.LineToInc(50,0);
-        // p2.LineToInc(0,-50);
-        // p2.LineToInc(-40,0);
-        // var c2 = p2.Root;
-        // var t1 = System.DateTime.Now;
-        // for (var i = 0; i < 1_000_000; i++) {
-        //     var mc1 = Contours.Union(c1, c2);
-        //     if (i % 100_000 == 0)
-        //         Console.WriteLine(mc1.OuterContour.Curves.Count);
-        // }
-        //
-        // var t2 = System.DateTime.Now;
-        // Console.WriteLine("Mss:"+(t2-t1));
-        // return;
-        
-        //PointsAccuracyHashing.HashPoints();
+
         
         CalculateResult();
         //MacroTest.MacroAmTest();
@@ -209,7 +174,7 @@ public static class Program {
         }
     }
 
-    public static GerberLayer ReadGerber(FileInfo fileInfo) {
+    public static GerberDocument ReadGerber(FileInfo fileInfo) {
         // try {
             var p = GerberReader.Instance.Read(fileInfo);
             if (p.Item2.Errors.Count > 0) {
@@ -259,7 +224,7 @@ public static class Program {
         }
     }
     
-    public static void WriteSvg(SvgLayer layer) {
+    public static void WriteSvg(SvgDocument layer) {
         var di = new DirectoryInfo(Directory.GetCurrentDirectory() + @"\test_files\svg");
         var files = di.GetFiles("svg_test_*");
         var num = files.Select(efi => efi.Name.Split(".")[0].Split("_").Last()).Select(int.Parse).Prepend(0).Max();

@@ -5,15 +5,15 @@ using Exception = System.Exception;
 
 namespace BoardFlow.Formats.Gerber.Reading.CommandReaders;
 
-public class SetUomFormatCommandReader: ICommandReader<GerberCommandType, GerberReadingContext, GerberLayer> {
+public class SetUomFormatCommandReader: ICommandReader<GerberCommandType, GerberReadingContext, GerberDocument> {
     public GerberCommandType[] GetNextLikelyTypes() {
         return [];
     }
     public bool Match(GerberReadingContext ctx) {
         return ctx.CurLine is "MOIN*" or "MOMM*";
     }
-    public void WriteToProgram(GerberReadingContext ctx, GerberLayer layer) {
-        layer.Uom = ctx.CurLine switch {
+    public void WriteToProgram(GerberReadingContext ctx, GerberDocument document) {
+        document.Uom = ctx.CurLine switch {
             "MOIN*" => Uom.Inch,
             "MOMM*" => Uom.Metric,
             _ => throw new Exception("Unknown UOM")

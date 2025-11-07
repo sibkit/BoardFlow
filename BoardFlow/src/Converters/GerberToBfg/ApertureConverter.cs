@@ -7,7 +7,7 @@ using BoardFlow.Formats.Gerber.Entities.Apertures;
 
 namespace BoardFlow.Converters.GerberToBfg;
 
-public class ApertureConverter(GerberLayer layer) {
+public class ApertureConverter(GerberDocument document) {
 
     public List<Shape> ConvertAperture(Point coordinate, IAperture aperture) {
 
@@ -99,7 +99,7 @@ public class ApertureConverter(GerberLayer layer) {
 
     public List<Shape> ConvertMacroAperture(Point coordinate, MacroAperture macro) {
         var result = new List<Shape>();
-        if (!layer.MacroApertureTemplates.TryGetValue(macro.TemplateName, out var template))
+        if (!document.MacroApertureTemplates.TryGetValue(macro.TemplateName, out var template))
             throw new ApplicationException("Не найден шаблон для макроаппертуры: \"" + macro.TemplateName + "\"");
 
         var shapes = (from primitive in template.Primitives let pc = new PrimitiveConverter(template, macro) select pc.Convert(primitive)).ToList();

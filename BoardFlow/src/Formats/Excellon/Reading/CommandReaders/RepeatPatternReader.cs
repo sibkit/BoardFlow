@@ -4,7 +4,7 @@ using ApplicationException = System.ApplicationException;
 
 namespace BoardFlow.Formats.Excellon.Reading.CommandReaders;
 
-public partial class RepeatPatternReader: ICommandReader<ExcellonCommandType, ExcellonReadingContext, ExcellonLayer> {
+public partial class RepeatPatternReader: ICommandReader<ExcellonCommandType, ExcellonReadingContext, Entities.ExcellonDocument> {
     
     public ExcellonCommandType[] GetNextLikelyTypes() {
         return [ExcellonCommandType.RepeatPattern];
@@ -13,7 +13,7 @@ public partial class RepeatPatternReader: ICommandReader<ExcellonCommandType, Ex
         return ctx.CurLine.StartsWith("M02");
     }
     
-    public void WriteToProgram(ExcellonReadingContext ctx, ExcellonLayer layer) {
+    public void WriteToProgram(ExcellonReadingContext ctx, Entities.ExcellonDocument document) {
         if (ctx.CurLine == "M02") {
             if (ctx.CurPattern == null || ctx.CurPattern.State == PatternState.Opened)
                 throw new ApplicationException("Pattern is null or opened (1)");
@@ -27,7 +27,7 @@ public partial class RepeatPatternReader: ICommandReader<ExcellonCommandType, Ex
 
             var pattern = ctx.CurPattern!;
             foreach (var operation in pattern.MachiningOperations) {
-                layer.Operations.Add(operation.CloneWithShift(readedPoint.Value));
+                document.Operations.Add(operation.CloneWithShift(readedPoint.Value));
             }
         }
     }

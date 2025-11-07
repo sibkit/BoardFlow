@@ -5,7 +5,7 @@ using BoardFlow.Formats.Gerber.Entities;
 
 namespace BoardFlow.Formats.Gerber.Reading.CommandReaders;
 
-public partial class FormatSpecificationCommandReader: ICommandReader<GerberCommandType, GerberReadingContext, GerberLayer> {
+public partial class FormatSpecificationCommandReader: ICommandReader<GerberCommandType, GerberReadingContext, GerberDocument> {
     private readonly Regex _regex = MatchRegex();
     
     public GerberCommandType[] GetNextLikelyTypes() {
@@ -14,7 +14,7 @@ public partial class FormatSpecificationCommandReader: ICommandReader<GerberComm
     public bool Match(GerberReadingContext ctx) {
         return _regex.IsMatch(ctx.CurLine);
     }
-    public void WriteToProgram(GerberReadingContext ctx, GerberLayer layer) {
+    public void WriteToProgram(GerberReadingContext ctx, GerberDocument document) {
         var m = _regex.Match(ctx.CurLine);
         var z = m.Groups[1].Value switch {
             "L" => Zeros.Leading,

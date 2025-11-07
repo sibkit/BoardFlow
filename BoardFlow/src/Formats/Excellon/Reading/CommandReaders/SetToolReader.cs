@@ -4,7 +4,7 @@ using BoardFlow.Formats.Excellon.Entities;
 
 namespace BoardFlow.Formats.Excellon.Reading.CommandReaders;
 
-public partial class SetToolReader: ICommandReader<ExcellonCommandType, ExcellonReadingContext, ExcellonLayer> {
+public partial class SetToolReader: ICommandReader<ExcellonCommandType, ExcellonReadingContext, Entities.ExcellonDocument> {
     
     private static readonly Regex ReSetTool = SetToolRegex();
     
@@ -14,7 +14,7 @@ public partial class SetToolReader: ICommandReader<ExcellonCommandType, Excellon
     public bool Match(ExcellonReadingContext ctx) {
         return ReSetTool.IsMatch(ctx.CurLine);
     }
-    public void WriteToProgram(ExcellonReadingContext ctx, ExcellonLayer layer) {
+    public void WriteToProgram(ExcellonReadingContext ctx, Entities.ExcellonDocument document) {
         var toolNumber = int.Parse(ctx.CurLine[1..]);
         ctx.CurToolNumber = toolNumber;
     }

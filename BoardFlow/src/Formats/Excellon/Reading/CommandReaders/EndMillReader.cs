@@ -3,14 +3,14 @@ using BoardFlow.Formats.Excellon.Entities;
 
 namespace BoardFlow.Formats.Excellon.Reading.CommandReaders;
 
-public class EndMillReader: ICommandReader<ExcellonCommandType, ExcellonReadingContext, ExcellonLayer> {
+public class EndMillReader: ICommandReader<ExcellonCommandType, ExcellonReadingContext, Entities.ExcellonDocument> {
     public ExcellonCommandType[] GetNextLikelyTypes() {
         return [ExcellonCommandType.RoutOperation, ExcellonCommandType.DrillOperation, ExcellonCommandType.SetTool];
     }
     public bool Match(ExcellonReadingContext ctx) {
         return ctx.CurLine is "M16" or "M17";
     }
-    public void WriteToProgram(ExcellonReadingContext ctx, ExcellonLayer layer) {
+    public void WriteToProgram(ExcellonReadingContext ctx, Entities.ExcellonDocument document) {
         if (ctx.CurLine == "M17" && ctx.Lines[ctx.CurIndex-1] == "M16") {
             return;
         }
@@ -19,7 +19,7 @@ public class EndMillReader: ICommandReader<ExcellonCommandType, ExcellonReadingC
             ctx.CurMillOperation = null;
             return;
         }
-        layer.Operations.Add(ctx.CurMillOperation);
+        document.Operations.Add(ctx.CurMillOperation);
         ctx.CurMillOperation = null;
     }
 }

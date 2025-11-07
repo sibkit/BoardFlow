@@ -3,14 +3,14 @@ using BoardFlow.Formats.Excellon.Entities;
 
 namespace BoardFlow.Formats.Excellon.Reading.CommandReaders;
 
-public class EndPatternReader: ICommandReader<ExcellonCommandType, ExcellonReadingContext, ExcellonLayer> {
+public class EndPatternReader: ICommandReader<ExcellonCommandType, ExcellonReadingContext, Entities.ExcellonDocument> {
     public ExcellonCommandType[] GetNextLikelyTypes() {
         return [ExcellonCommandType.RepeatPattern];
     }
     public bool Match(ExcellonReadingContext ctx) {
         return ctx.CurLine is "M01" or "M08";
     }
-    public void WriteToProgram(ExcellonReadingContext ctx, ExcellonLayer layer) {
+    public void WriteToProgram(ExcellonReadingContext ctx, Entities.ExcellonDocument document) {
         switch (ctx.CurLine) {
             case "M01": {
                 if (ctx.CurPattern == null || ctx.CurPattern.State == PatternState.Closed) {

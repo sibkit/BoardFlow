@@ -4,7 +4,7 @@ using BoardFlow.Formats.Gerber.Entities;
 
 namespace BoardFlow.Formats.Gerber.Reading.CommandReaders;
 
-public partial class MoveOperationCommandReader: ICommandReader<GerberCommandType, GerberReadingContext, GerberLayer> {
+public partial class MoveOperationCommandReader: ICommandReader<GerberCommandType, GerberReadingContext, GerberDocument> {
     
     [GeneratedRegex("^(?:(X)([+-]?[0-9.]+))?(?:(Y)([+-]?[0-9.]+))?D02\\*$")]
     private static partial Regex MatchRegex();
@@ -16,7 +16,7 @@ public partial class MoveOperationCommandReader: ICommandReader<GerberCommandTyp
     public bool Match(GerberReadingContext ctx) {
         return MatchRegex().IsMatch(ctx.CurLine);
     }
-    public void WriteToProgram(GerberReadingContext ctx, GerberLayer layer) {
+    public void WriteToProgram(GerberReadingContext ctx, GerberDocument document) {
         var m = MatchRegex().Match(ctx.CurLine);
         var xs = m.Groups[2].Value;
         var ys = m.Groups[4].Value;

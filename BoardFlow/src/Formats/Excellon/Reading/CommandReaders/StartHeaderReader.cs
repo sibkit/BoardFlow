@@ -3,7 +3,7 @@ using BoardFlow.Formats.Excellon.Entities;
 
 namespace BoardFlow.Formats.Excellon.Reading.CommandReaders;
 
-public class StartHeaderReader : ICommandReader<ExcellonCommandType, ExcellonReadingContext, ExcellonLayer>
+public class StartHeaderReader : ICommandReader<ExcellonCommandType, ExcellonReadingContext, Entities.ExcellonDocument>
 {
     public ExcellonCommandType[] GetNextLikelyTypes()
     {
@@ -15,7 +15,7 @@ public class StartHeaderReader : ICommandReader<ExcellonCommandType, ExcellonRea
         return ctx.CurLine.Trim().ToUpper().Equals("M48");
     }
 
-    public void WriteToProgram(ExcellonReadingContext ctx, ExcellonLayer layer)
+    public void WriteToProgram(ExcellonReadingContext ctx, Entities.ExcellonDocument document)
     {
         //Do nothing;
     }

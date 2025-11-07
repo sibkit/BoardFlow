@@ -6,7 +6,7 @@ using BoardFlow.Formats.Gerber.Entities.Apertures;
 
 namespace BoardFlow.Formats.Gerber.Reading.CommandReaders;
 
-public partial class DefineApertureCommandReader: ICommandReader<GerberCommandType, GerberReadingContext, GerberLayer>  {
+public partial class DefineApertureCommandReader: ICommandReader<GerberCommandType, GerberReadingContext, GerberDocument>  {
     
 
     
@@ -113,7 +113,7 @@ public partial class DefineApertureCommandReader: ICommandReader<GerberCommandTy
         return ctx.CurLine.StartsWith("ADD");
     }
     
-    public void WriteToProgram(GerberReadingContext ctx, GerberLayer layer) {
+    public void WriteToProgram(GerberReadingContext ctx, GerberDocument document) {
         
         // var mm = MatchMacroRegex().Match(ctx.CurLine);
         // if (mm.Success) {
@@ -129,19 +129,19 @@ public partial class DefineApertureCommandReader: ICommandReader<GerberCommandTy
             var sParams = m.Groups[3].Value;
             switch (m.Groups[2].Value) {
                 case "C":
-                    layer.Apertures.Add(appNum, ParseCircleAperture(sParams));
+                    document.Apertures.Add(appNum, ParseCircleAperture(sParams));
                 break;
                 case "R":
-                    layer.Apertures.Add(appNum, ParseRectangleAperture(sParams));
+                    document.Apertures.Add(appNum, ParseRectangleAperture(sParams));
                     break;
                 case "O":
-                    layer.Apertures.Add(appNum, ParseObRoundAperture(sParams));
+                    document.Apertures.Add(appNum, ParseObRoundAperture(sParams));
                     break;
                 case "P":
-                    layer.Apertures.Add(appNum, ParsePolygonAperture(sParams));
+                    document.Apertures.Add(appNum, ParsePolygonAperture(sParams));
                     break;
                 default:
-                    layer.Apertures.Add(appNum, ParseMacroAperture(m.Groups[2].Value, sParams));
+                    document.Apertures.Add(appNum, ParseMacroAperture(m.Groups[2].Value, sParams));
                     break;
             }
         } else {

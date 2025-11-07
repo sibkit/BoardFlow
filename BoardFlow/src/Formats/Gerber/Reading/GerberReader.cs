@@ -4,12 +4,12 @@ using BoardFlow.Formats.Gerber.Reading.CommandReaders;
 
 namespace BoardFlow.Formats.Gerber.Reading;
 
-public class GerberReader: CommandsFileReader<GerberCommandType, GerberReadingContext, GerberLayer> {
+public class GerberReader: CommandsFileReader<GerberCommandType, GerberReadingContext, GerberDocument> {
 
     public static readonly GerberReader Instance = new();
     
-    private static Dictionary<GerberCommandType, ICommandReader<GerberCommandType, GerberReadingContext, GerberLayer>> GetHandlers() {
-        var handlers = new Dictionary<GerberCommandType, ICommandReader<GerberCommandType, GerberReadingContext, GerberLayer>> {
+    private static Dictionary<GerberCommandType, ICommandReader<GerberCommandType, GerberReadingContext, GerberDocument>> GetHandlers() {
+        var handlers = new Dictionary<GerberCommandType, ICommandReader<GerberCommandType, GerberReadingContext, GerberDocument>> {
             { GerberCommandType.LineSegmentOperation, new LineSegmentOperationReader() },
             { GerberCommandType.Comment, new CommentReader() },
             { GerberCommandType.FormatSpecification, new FormatSpecificationCommandReader() },

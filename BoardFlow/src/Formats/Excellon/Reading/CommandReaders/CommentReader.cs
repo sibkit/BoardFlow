@@ -3,14 +3,14 @@ using BoardFlow.Formats.Excellon.Entities;
 
 namespace BoardFlow.Formats.Excellon.Reading.CommandReaders;
 
-public class CommentReader: ICommandReader<ExcellonCommandType, ExcellonReadingContext, ExcellonLayer> {
+public class CommentReader: ICommandReader<ExcellonCommandType, ExcellonReadingContext, Entities.ExcellonDocument> {
     public ExcellonCommandType[] GetNextLikelyTypes() {
         return [ExcellonCommandType.Comment];
     }
     public bool Match(ExcellonReadingContext ctx) {
         return ctx.CurLine.StartsWith(';') || ctx.CurLine.StartsWith("M47");
     }
-    public void WriteToProgram(ExcellonReadingContext ctx, ExcellonLayer layer) {
+    public void WriteToProgram(ExcellonReadingContext ctx, Entities.ExcellonDocument document) {
         var lines = ctx.CurLine.Split('=');
         if (lines.Length != 2) {
             ctx.WriteInfo("Комментарий: "+ctx.CurLine);

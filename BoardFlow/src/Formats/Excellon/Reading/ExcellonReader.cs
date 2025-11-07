@@ -13,12 +13,12 @@ using SetToolReader = SetToolReader;
 using SetUomFormatReader = SetUomFormatReader;
 using ToolDefineReader = ToolDefineReader;
 
-public class ExcellonReader: CommandsFileReader<ExcellonCommandType,ExcellonReadingContext, ExcellonLayer> {
+public class ExcellonReader: CommandsFileReader<ExcellonCommandType,ExcellonReadingContext, Entities.ExcellonDocument> {
     
     public static readonly ExcellonReader Instance = new();
 
-    private static Dictionary<ExcellonCommandType, ICommandReader<ExcellonCommandType, ExcellonReadingContext, ExcellonLayer>> GetHandlers() {
-        var handlers = new Dictionary<ExcellonCommandType, ICommandReader<ExcellonCommandType, ExcellonReadingContext, ExcellonLayer>> {
+    private static Dictionary<ExcellonCommandType, ICommandReader<ExcellonCommandType, ExcellonReadingContext, Entities.ExcellonDocument>> GetHandlers() {
+        var handlers = new Dictionary<ExcellonCommandType, ICommandReader<ExcellonCommandType, ExcellonReadingContext, Entities.ExcellonDocument>> {
             { ExcellonCommandType.StartHeader, new StartHeaderReader() },
             { ExcellonCommandType.Comment, new CommentReader() },
             { ExcellonCommandType.EndHeader, new EndHeaderReader() },

@@ -13,18 +13,18 @@ namespace BoardFlow.Converters.GerberToBfg;
 
 public static class GerberToSpvConverter {
     
-    public static SvgLayer Convert(GerberLayer layer) {
+    public static SvgDocument Convert(GerberDocument document) {
 
-        var result = new SvgLayer();
-        var apertureConverter = new ApertureConverter(layer);
-        foreach(var operation in layer.Operations)
+        var result = new SvgDocument();
+        var apertureConverter = new ApertureConverter(document);
+        foreach(var operation in document.Operations)
         {
             switch (operation) {
                 case PathPaintOperation path:
                     result.Elements.Add(ConvertPath(path));
                     break;
                 case FlashOperation flash:
-                    var aperture = layer.Apertures[flash.ApertureCode];
+                    var aperture = document.Apertures[flash.ApertureCode];
                     result.Elements.AddRange(apertureConverter.ConvertAperture(flash.Point, aperture));
                     break;
                 default:

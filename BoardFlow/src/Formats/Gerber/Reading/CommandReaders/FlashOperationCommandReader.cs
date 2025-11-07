@@ -4,7 +4,7 @@ using BoardFlow.Formats.Gerber.Entities;
 
 namespace BoardFlow.Formats.Gerber.Reading.CommandReaders;
 
-public partial class FlashOperationCommandReader: ICommandReader<GerberCommandType, GerberReadingContext, GerberLayer>  {
+public partial class FlashOperationCommandReader: ICommandReader<GerberCommandType, GerberReadingContext, GerberDocument>  {
     
     [GeneratedRegex("^(?:(X)([+-]?[0-9.]+))?(?:(Y)([+-]?[0-9.]+))?D03\\*$")]
     private static partial Regex MatchRegex();
@@ -17,7 +17,7 @@ public partial class FlashOperationCommandReader: ICommandReader<GerberCommandTy
         return MatchRegex().IsMatch(ctx.CurLine);
     }
     
-    public void WriteToProgram(GerberReadingContext ctx, GerberLayer layer) {
+    public void WriteToProgram(GerberReadingContext ctx, GerberDocument document) {
         
         var m = MatchRegex().Match(ctx.CurLine);
         var xs = m.Groups[2].Value;
@@ -34,7 +34,7 @@ public partial class FlashOperationCommandReader: ICommandReader<GerberCommandTy
             return;
         }
 
-        layer.Operations.Add(new FlashOperation {
+        document.Operations.Add(new FlashOperation {
             Point = Coordinates.ParseCoordinate(ctx.NumberFormat!,xs,ys),
             ApertureCode = ctx.CurApertureCode.Value
         });

@@ -2,7 +2,7 @@
 
 namespace BoardFlow.Formats.Excellon.Entities;
 
-public class ExcellonLayer
+public class ExcellonDocument
 {
     public List<IMachiningOperation> Operations { get; } = [];
     public Uom? Uom {get; set;} = null;

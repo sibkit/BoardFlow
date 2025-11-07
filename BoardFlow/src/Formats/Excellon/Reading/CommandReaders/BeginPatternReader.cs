@@ -5,18 +5,18 @@ using ApplicationException = System.ApplicationException;
 
 namespace BoardFlow.Formats.Excellon.Reading.CommandReaders;
 
-public class BeginPatternReader: ICommandReader<ExcellonCommandType, ExcellonReadingContext, ExcellonLayer> {
+public class BeginPatternReader: ICommandReader<ExcellonCommandType, ExcellonReadingContext, Entities.ExcellonDocument> {
     public ExcellonCommandType[] GetNextLikelyTypes() {
         return [ExcellonCommandType.DrillOperation];
     }
     public bool Match(ExcellonReadingContext ctx) {
         return ctx.CurLine == "M25";
     }
-    public void WriteToProgram(ExcellonReadingContext ctx, ExcellonLayer layer) {
+    public void WriteToProgram(ExcellonReadingContext ctx, Entities.ExcellonDocument document) {
         if (ctx.CurPattern == null || ctx.CurPattern.State == PatternState.Closed) {
             var coordinate = new Point(0,0);
-            if (layer.Operations.Count != 0) {
-                var lo = layer.Operations.Last();
+            if (document.Operations.Count != 0) {
+                var lo = document.Operations.Last();
                 coordinate = lo.StartPoint;
             }
             

@@ -7,7 +7,7 @@ using BoardFlow.Formats.Gerber.Reading.Macro;
 
 namespace BoardFlow.Formats.Gerber.Reading.CommandReaders;
 
-public partial class DefineApertureTemplateCommandReader: ICommandReader<GerberCommandType, GerberReadingContext, GerberLayer>  {
+public partial class DefineApertureTemplateCommandReader: ICommandReader<GerberCommandType, GerberReadingContext, GerberDocument>  {
     
     [GeneratedRegex(@"^%AM.+%$")]
     private static partial Regex MatchRegex();
@@ -42,7 +42,7 @@ public partial class DefineApertureTemplateCommandReader: ICommandReader<GerberC
         };
     }
     
-    public void WriteToProgram(GerberReadingContext ctx, GerberLayer layer) {
+    public void WriteToProgram(GerberReadingContext ctx, GerberDocument document) {
         var lines = ctx.CurLine.Trim('%').Split('*', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
         var name = lines[0][2..];
         var am = new MacroApertureTemplate(name);
@@ -57,7 +57,7 @@ public partial class DefineApertureTemplateCommandReader: ICommandReader<GerberC
             }
         }
         //Console.WriteLine(ctx.CurLine);
-        layer.MacroApertureTemplates.Add(name, am);
+        document.MacroApertureTemplates.Add(name, am);
     }
 
     private static IExpression ReadExpression(string expression) {

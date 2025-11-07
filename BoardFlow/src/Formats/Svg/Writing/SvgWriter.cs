@@ -15,13 +15,8 @@ public static class SvgWriter {
     static SvgWriter() {
         CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
     }
-
-
     
-    
-
-
-    private static Bounds CalculateViewBox(SvgLayer doc) {
+    private static Bounds CalculateViewBox(Entities.SvgDocument doc) {
         // var leftTop = new Point(double.MaxValue, double.MaxValue);
         // var rightBottom = new Point(double.MinValue, double.MinValue);
 
@@ -164,7 +159,7 @@ public static class SvgWriter {
         writer.Write("<circle cx=\"" + Math.Round(dot.CenterPoint.X, 6) + "\" cy=\"" + Math.Round(dot.CenterPoint.Y, 6) + "\" r=\"" + Math.Round(dot.Diameter / 2, 6) + "\" fill=\"red\"/>");
     }
 
-    public static void Write(SvgLayer doc, string fileName) {
+    public static void Write(Entities.SvgDocument doc, string fileName) {
         using var swr = new StreamWriter(fileName);
         _pathPartsBounds.Clear();
         var vbr = doc.ViewBox ?? CalculateViewBox(doc);
