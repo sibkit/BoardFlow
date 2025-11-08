@@ -2,9 +2,9 @@
 
 namespace BoardFlow.Formats.Bfg.Entities;
 
-public struct Point(double x, double y) : IEquatable<Point> {
-    public double X { get; set; } = x;
-    public double Y { get; set; } = y;
+public readonly struct Point(double x, double y) : IEquatable<Point> {
+    public double X { get; init; } = x;
+    public double Y { get; init; } = y;
     
     public static Point operator +(Point a, Point b)
         => new (a.X + b.X, a.Y + b.Y);
@@ -28,7 +28,5 @@ public struct Point(double x, double y) : IEquatable<Point> {
         return Math.Abs(X-other.X)<Geometry.Accuracy && Math.Abs(Y-other.Y)<Geometry.Accuracy;
     }
 
-    public override int GetHashCode() {
-        return HashCode.Combine(Math.Round(X,1), Math.Round(Y,1));
-    }
+    public override int GetHashCode() => HashCode.Combine(X, Y);
 }

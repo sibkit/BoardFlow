@@ -1,24 +1,22 @@
-﻿using BoardFlow.Formats.Bfg.Entities.GraphicElements;
+﻿using BoardFlow.Formats.Bfg.Entities;
+using BoardFlow.Formats.Bfg.Entities.GraphicElements;
 using BoardFlow.Formats.Bfg.Entities.GraphicElements.Curves;
 
-namespace BoardFlow.Formats.Bfg.Entities;
+namespace BoardFlow.Formats.Bfg.Handling;
 
-public class Bfg {
-    public List<IGraphicElement> GraphicElements { get; } = [];
-    public Bounds? Bounds { get; set; }
-    
-    public void InvertYAxe() {
-        foreach (var e in GraphicElements) {
+public static class AxeInversionExtension {
+    public static void InvertYAxe(this BfgDocument document) {
+        foreach (var e in document.GraphicElements) {
             switch (e) {
 
                 case CurvesOwner ctr:
-                    InvertYAxe(ctr);
+                    ctr.InvertYAxe();
                     break;
                 case Shape shape:
                     foreach (var oc in shape.OuterContours)
-                        InvertYAxe(oc);
+                        oc.InvertYAxe();
                     foreach (var ic in shape.InnerContours)
-                        InvertYAxe(ic);
+                        ic.InvertYAxe();
                     break;
                 case Dot dot:
                     dot.CenterPoint = new Point(dot.CenterPoint.X, -1*dot.CenterPoint.Y);
@@ -29,8 +27,8 @@ public class Bfg {
             //e.UpdateBounds();
         }
     }
-    
-    static void InvertYAxe(ICurve curve) {
+
+    private static void InvertYAxe(this ICurve curve) {
 
         switch (curve) {
             case Line line:
@@ -47,11 +45,10 @@ public class Bfg {
         }
     }
 
-    static void InvertYAxe(CurvesOwner ctx) {
+    private static void InvertYAxe(this CurvesOwner ctx) {
         //ctx.StartPoint = ctx.StartPoint.WithNewY(-ctx.StartPoint.Y);
         foreach (var p in ctx.Curves) {
-            InvertYAxe(p);
+            p.InvertYAxe();
         }
     }
-    
 }

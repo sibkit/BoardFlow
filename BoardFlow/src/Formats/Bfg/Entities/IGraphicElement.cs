@@ -1,6 +1,8 @@
 ﻿namespace BoardFlow.Formats.Bfg.Entities;
 
 public interface IGraphicElement {
+    
+    
     Bounds Bounds { get; }
     //void UpdateBounds();
     

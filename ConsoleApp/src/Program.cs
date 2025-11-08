@@ -26,7 +26,7 @@ public static class Program {
 
     static void BuildTestPrintFile() {
 
-        var spv = new Bfg {
+        var spv = new BfgDocument {
             Bounds = new Bounds(0, 0, 1800, 1800)
         };
         

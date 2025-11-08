@@ -7,17 +7,17 @@ using BoardFlow.Formats.Svg.Writing;
 namespace BoardFlow.Converters.BfgToSvg;
 
 public static class SpvToSvgConverter {
-    public static SvgDocument Convert(Bfg bfg) {
+    public static SvgDocument Convert(BfgDocument bfgDocument) {
         var result = new SvgDocument {
-            ViewBox = bfg.Bounds
+            ViewBox = bfgDocument.Bounds
         };
-        result.Elements.AddRange(bfg.GraphicElements);
+        result.Elements.AddRange(bfgDocument.GraphicElements);
         InvertAxis(result);
         return result;
     }
 
     public static void WriteContour(Contour contour, string filename) {
-        var area = new Bfg();
+        var area = new BfgDocument();
         area.GraphicElements.Add(contour);
         var layer = Convert(area);
         //InvertAxis(layer);

@@ -4,11 +4,11 @@ namespace BoardFlow.Board.Layers;
 
 public class DrillLayer: IBoardLayer {
     public required string Name { get; set; }
-    public Bfg Image { get; }
+    public BfgDocument Image { get; }
     public bool IsMetallization { get; }
     public IStackLayer? FromLayer { get; set; }
     public IStackLayer? ToLayer { get; set; }
-    public DrillLayer(Bfg image, bool isMetallization) {
+    public DrillLayer(BfgDocument image, bool isMetallization) {
         Image = image;
         IsMetallization = isMetallization;
     }

@@ -168,7 +168,7 @@ public class ContoursTest {
 
     [Fact]
     public void MoveTest() {
-        var area = new Bfg();
+        var area = new BfgDocument();
         var cts = GetContours2();
         
         for (var i = 0; i < 5; i++) {
@@ -193,7 +193,7 @@ public class ContoursTest {
     [Fact]
     public void TestContoursOperation() {
 
-        var area = new Bfg();
+        var area = new BfgDocument();
         var cts = GetContours2().Union(GetContours()).ToList();
 
         var line = 0;
@@ -259,7 +259,7 @@ public class ContoursTest {
 
         var shape = Contours.Union(p1.Root, p2.Root);
         
-        var area = new Bfg();
+        var area = new BfgDocument();
         area.GraphicElements.Add(shape);
         var svg = SpvToSvgConverter.Convert(area);
         SvgWriter.Write(svg, "D://ts1.svg");

@@ -18,6 +18,8 @@ public abstract class CurvesOwner: IGraphicElement {
         }
     }
 
+    
+    
     public Bounds Bounds {
         get {
             var bounds = Bounds.Empty();
